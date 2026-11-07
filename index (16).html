@@ -1,0 +1,2233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Pépinière - Quality Trees for Every Garden</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap');
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #134e3a 0%, #166534 25%, #22c55e 50%, #86efac 75%, #bbf7d0 100%);
+            background-size: 400% 400%;
+            animation: gradientFlow 15s ease infinite;
+        }
+        
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .tree-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        .tree-card {
+            border-radius: 16px 16px 0 0 !important;
+        }
+        
+        .tree-card-image {
+            height: 280px;
+        }
+        
+        /* Buy Now Button Glamour Effect */
+        .buy-now-btn {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #166534 0%, #22c55e 50%, #166534 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+            transition: all 0.3s ease;
+        }
+        
+        .buy-now-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .buy-now-btn:hover::before {
+            left: 100%;
+        }
+        
+        .buy-now-btn::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, #22c55e, #86efac, #22c55e, #166534);
+            background-size: 400% 400%;
+            animation: borderGlow 3s ease infinite;
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .buy-now-btn:hover::after {
+            opacity: 1;
+        }
+        
+        .buy-now-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(34, 197, 94, 0.5), 0 0 20px rgba(34, 197, 94, 0.3);
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes borderGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .buy-now-btn .btn-shine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: skewX(-20deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { left: -50px; }
+            20% { left: calc(100% + 50px); }
+            100% { left: calc(100% + 50px); }
+        }
+        
+        .tree-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .tree-card:hover .tree-card-overlay {
+            opacity: 1;
+        }
+        
+        .tree-card-actions {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            gap: 12px;
+        }
+        
+        .tree-card:hover .tree-card-actions {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .tree-action-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        .tree-action-btn.view-btn {
+            background: white;
+            color: #166534;
+        }
+        
+        .tree-action-btn.view-btn:hover {
+            background: #166534;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .tree-action-btn.cart-btn-card {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .tree-action-btn.cart-btn-card:hover {
+            background: #d97706;
+            transform: scale(1.1);
+        }
+        
+        .category-btn.active {
+            background-color: #166534;
+            color: white;
+        }
+        
+        .media-tab.active {
+            background-color: #166534;
+            color: white;
+        }
+        
+        /* Floating animation for cards */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating-card {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .floating-card:nth-child(2) { animation-delay: 0.5s; }
+        .floating-card:nth-child(3) { animation-delay: 1s; }
+        .floating-card:nth-child(4) { animation-delay: 1.5s; }
+        
+        /* Section title separator */
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #166534, #22c55e);
+            margin: 16px auto 0;
+            border-radius: 2px;
+        }
+        
+        .section-title-left::after {
+            margin: 16px 0 0;
+        }
+        
+        /* Section title decorations */
+        .decorated-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .title-decoration {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .title-decoration .line {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #22c55e);
+            border-radius: 2px;
+        }
+        
+        .title-decoration.right .line {
+            background: linear-gradient(90deg, #22c55e, transparent);
+        }
+        
+        .title-decoration .leaf {
+            color: #22c55e;
+            font-size: 1.2rem;
+        }
+        
+        .title-decoration.left .leaf {
+            transform: scaleX(-1);
+        }
+        
+        /* For light backgrounds (dark titles) */
+        .decorated-title-dark .title-decoration .line {
+            background: linear-gradient(90deg, transparent, #166534);
+        }
+        
+        .decorated-title-dark .title-decoration.right .line {
+            background: linear-gradient(90deg, #166534, transparent);
+        }
+        
+        .decorated-title-dark .title-decoration .leaf {
+            color: #166534;
+        }
+        
+        /* For dark backgrounds (light titles) */
+        .decorated-title-light .title-decoration .line {
+            background: linear-gradient(90deg, transparent, #86efac);
+        }
+        
+        .decorated-title-light .title-decoration.right .line {
+            background: linear-gradient(90deg, #86efac, transparent);
+        }
+        
+        .decorated-title-light .title-decoration .leaf {
+            color: #86efac;
+        }
+        
+        /* Animated leaves */
+        @keyframes leafSway {
+            0%, 100% { transform: scaleX(-1) rotate(-5deg); }
+            50% { transform: scaleX(-1) rotate(5deg); }
+        }
+        
+        @keyframes leafSwayRight {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        
+        .title-decoration.left .leaf {
+            animation: leafSway 3s ease-in-out infinite;
+        }
+        
+        .title-decoration.right .leaf {
+            animation: leafSwayRight 3s ease-in-out infinite;
+        }
+        
+        /* Cart Sidebar */
+        .cart-panel {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .cart-panel.open {
+            transform: translateX(0) !important;
+        }
+        
+        .cart-item {
+            animation: slideInRight 0.3s ease-out;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .cart-item-remove {
+            transition: all 0.2s ease;
+        }
+        
+        .cart-item-remove:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Quantity Controls */
+        .qty-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            font-weight: bold;
+        }
+        
+        .qty-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Checkout Modal */
+        .checkout-content.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        /* Success Modal */
+        .success-content.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        @keyframes successPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            50% { box-shadow: 0 0 0 20px rgba(34, 197, 94, 0); }
+        }
+        
+        .success-content.show .fa-check {
+            animation: successPulse 2s infinite;
+        }
+        
+        /* Cool Navbar Styles */
+        .navbar {
+            background: rgba(20, 83, 45, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .navbar-container {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: 100%;
+            margin: 0 auto;
+            border-radius: 0;
+        }
+        
+        .navbar.scrolled {
+            background: transparent;
+            border-bottom: none;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+        
+        .navbar.scrolled .navbar-container {
+            max-width: 900px;
+            background: rgba(20, 83, 45, 0.98);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            padding: 0.5rem 2rem;
+        }
+        
+        /* Tree Roots Background Decoration */
+        .roots-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .tree-root {
+            position: absolute;
+            opacity: 0.06;
+        }
+        
+        .tree-root.light {
+            opacity: 0.04;
+        }
+        
+        .tree-root svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .tree-root path {
+            fill: none;
+            stroke: currentColor;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        
+        /* Root positions and sizes */
+        .tree-root.root-left-bottom {
+            bottom: -50px;
+            left: -100px;
+            width: 400px;
+            height: 350px;
+            color: #2d5a3d;
+            transform: rotate(10deg);
+        }
+        
+        .tree-root.root-right-bottom {
+            bottom: -80px;
+            right: -120px;
+            width: 450px;
+            height: 400px;
+            color: #1a3d28;
+            transform: scaleX(-1) rotate(5deg);
+        }
+        
+        .tree-root.root-left-top {
+            top: -30px;
+            left: -80px;
+            width: 350px;
+            height: 300px;
+            color: #166534;
+            transform: rotate(180deg);
+        }
+        
+        .tree-root.root-right-top {
+            top: -50px;
+            right: -100px;
+            width: 380px;
+            height: 320px;
+            color: #14532d;
+            transform: scaleX(-1) rotate(180deg);
+        }
+        
+        .tree-root.root-center-bottom {
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 300px;
+            color: #15803d;
+            opacity: 0.04;
+        }
+        
+        /* Subtle animation for roots */
+        @keyframes rootGrow {
+            0%, 100% { 
+                opacity: 0.06;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.08;
+                transform: scale(1.02);
+            }
+        }
+        
+        .tree-root.animated {
+            animation: rootGrow 8s ease-in-out infinite;
+        }
+        
+        .tree-root.animated:nth-child(2) {
+            animation-delay: 2s;
+        }
+        
+        .tree-root.animated:nth-child(3) {
+            animation-delay: 4s;
+        }
+        
+        /* Responsive - adjust root sizes on mobile */
+        @media (max-width: 768px) {
+            .tree-root {
+                opacity: 0.04;
+            }
+            
+            .tree-root.root-left-bottom,
+            .tree-root.root-right-bottom {
+                width: 250px;
+                height: 220px;
+            }
+            
+            .tree-root.root-left-top,
+            .tree-root.root-right-top {
+                display: none;
+            }
+            
+            .tree-root.root-center-bottom {
+                width: 300px;
+                height: 200px;
+            }
+        }
+
+        /* Floating Cart Button */
+        .floating-cart {
+            position: fixed;
+            right: -80px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+        }
+        
+        .floating-cart.visible {
+            right: 20px;
+            opacity: 1;
+        }
+        
+        .floating-cart-btn {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #166534 0%, #22c55e 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(22, 101, 52, 0.4), 0 0 0 4px rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .floating-cart-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 50px rgba(22, 101, 52, 0.5), 0 0 0 6px rgba(255, 255, 255, 0.3);
+        }
+        
+        .floating-cart-btn:hover .floating-cart-icon {
+            animation: cartBounce 0.5s ease;
+        }
+        
+        .floating-cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(245, 158, 11, 0.5);
+            animation: badgePulse 2s infinite;
+        }
+        
+        /* Hide original cart when scrolled */
+        .navbar.scrolled .cart-btn {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.5);
+        }
+        
+        .cart-btn {
+            transition: all 0.4s ease;
+        }
+        
+        /* Logo animation */
+        .logo-icon {
+            transition: all 0.4s ease;
+            filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.5));
+        }
+        
+        .logo-container:hover .logo-icon {
+            transform: rotate(15deg) scale(1.1);
+            filter: drop-shadow(0 0 15px rgba(74, 222, 128, 0.8));
+        }
+        
+        .logo-text {
+            background: linear-gradient(135deg, #ffffff 0%, #86efac 50%, #ffffff 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.4s ease;
+        }
+        
+        .logo-container:hover .logo-text {
+            background-position: right center;
+        }
+        
+        /* Nav links with cool underline effect */
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #22c55e, #86efac, #22c55e);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .nav-link:hover::before {
+            width: 100%;
+        }
+        
+        .nav-link:hover {
+            color: #86efac;
+            text-shadow: 0 0 20px rgba(134, 239, 172, 0.5);
+        }
+        
+        /* Active nav link */
+        .nav-link.active {
+            color: #86efac;
+        }
+        
+        .nav-link.active::before {
+            width: 100%;
+            background: #22c55e;
+        }
+        
+        /* Cart button effects */
+        .cart-btn {
+            position: relative;
+            padding: 0.75rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .cart-btn:hover {
+            background: rgba(34, 197, 94, 0.3);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+        }
+        
+        .cart-btn:hover .cart-icon {
+            animation: cartBounce 0.5s ease;
+        }
+        
+        @keyframes cartBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        
+        .cart-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            box-shadow: 0 2px 10px rgba(245, 158, 11, 0.5);
+            animation: badgePulse 2s infinite;
+        }
+        
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Mobile menu button */
+        .menu-btn {
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .menu-btn:hover {
+            background: rgba(34, 197, 94, 0.3);
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(20, 83, 45, 0.98);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(-10px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu.open {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-nav-link {
+            display: block;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-nav-link:hover {
+            background: rgba(34, 197, 94, 0.2);
+            padding-left: 2rem;
+            color: #86efac;
+        }
+        
+        /* Navbar decorative elements */
+        .nav-glow {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+    </style>
+</head>
+<body class="bg-stone-50">
+    <!-- Floating Admin Toggle Button -->
+    <a href="admin.html" class="fixed left-6 bottom-6 z-50 group" title="Admin Panel">
+        <div class="relative">
+            <div class="w-14 h-14 bg-gradient-to-br from-gray-800 to-gray-900 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-gray-500/30">
+                <i class="fas fa-cog text-xl text-white transition-transform duration-500 group-hover:rotate-180"></i>
+            </div>
+            <span class="absolute left-full ml-3 top-1/2 -translate-y-1/2 bg-gray-900 text-white text-sm font-medium px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap pointer-events-none">
+                Admin Panel
+                <span class="absolute right-full top-1/2 -translate-y-1/2 border-8 border-transparent border-r-gray-900"></span>
+            </span>
+        </div>
+    </a>
+
+    <!-- Floating Cart Button -->
+    <div id="floatingCart" class="floating-cart">
+        <button class="floating-cart-btn" onclick="openCart()">
+            <i class="fas fa-shopping-cart text-2xl text-white floating-cart-icon"></i>
+            <span id="floatingCartCount" class="floating-cart-badge">0</span>
+        </button>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar text-white py-4 sticky top-0 z-50">
+        <div class="nav-glow" id="navGlow"></div>
+        <div class="navbar-container container mx-auto px-4 flex justify-between items-center relative">
+            <!-- Logo -->
+            <a href="#home" class="logo-container flex items-center gap-3 cursor-pointer">
+                <div class="relative">
+                    <i class="fas fa-tree text-3xl text-green-400 logo-icon"></i>
+                    <div class="absolute -inset-2 bg-green-400/20 rounded-full blur-md -z-10"></div>
+                </div>
+                <span class="text-2xl font-bold font-['Playfair_Display'] logo-text">Farm Pépinière</span>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center gap-10">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#trees" class="nav-link">Our Trees</a>
+                <a href="#about" class="nav-link">About Us</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            
+            <!-- Right Side -->
+            <div class="flex items-center gap-4">
+                <!-- Cart Button -->
+                <button id="cartBtn" class="cart-btn relative">
+                    <i class="fas fa-shopping-cart text-xl cart-icon"></i>
+                    <span id="cartCount" class="cart-badge text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+                </button>
+                
+                <!-- Mobile Menu Button -->
+                <button class="menu-btn md:hidden" onclick="toggleMenu()">
+                    <i class="fas fa-bars text-xl" id="menuIcon"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu md:hidden" id="mobileMenu">
+            <a href="#home" class="mobile-nav-link" onclick="closeMenu()">
+                <i class="fas fa-home mr-3 text-green-400"></i>Home
+            </a>
+            <a href="#trees" class="mobile-nav-link" onclick="closeMenu()">
+                <i class="fas fa-tree mr-3 text-green-400"></i>Our Trees
+            </a>
+            <a href="#about" class="mobile-nav-link" onclick="closeMenu()">
+                <i class="fas fa-info-circle mr-3 text-green-400"></i>About Us
+            </a>
+            <a href="#contact" class="mobile-nav-link" onclick="closeMenu()">
+                <i class="fas fa-envelope mr-3 text-green-400"></i>Contact
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-[600px] flex items-center text-white py-16 relative">
+        <!-- Tree Roots Background -->
+        <div class="roots-container">
+            <div class="tree-root root-left-bottom light animated">
+                <svg viewBox="0 0 400 350">
+                    <path d="M200 0 Q180 50 160 80 Q120 120 80 150 Q40 180 10 220 Q-10 250 20 280 Q40 300 30 340" stroke-width="12"/>
+                    <path d="M200 0 Q220 60 200 100 Q180 140 150 180 Q120 220 100 270 Q90 300 110 340" stroke-width="10"/>
+                    <path d="M200 0 Q240 40 260 80 Q280 130 300 180 Q320 230 350 280 Q370 310 390 340" stroke-width="11"/>
+                    <path d="M160 80 Q140 100 110 110 Q70 120 40 140" stroke-width="6"/>
+                    <path d="M200 100 Q170 130 140 150 Q100 170 60 200" stroke-width="5"/>
+                    <path d="M260 80 Q290 100 320 110 Q350 130 380 150" stroke-width="6"/>
+                    <path d="M300 180 Q330 200 360 220 Q380 240 400 260" stroke-width="5"/>
+                    <path d="M80 150 Q50 170 30 200 Q10 230 0 260" stroke-width="4"/>
+                    <path d="M150 180 Q130 210 100 240 Q80 270 70 300" stroke-width="4"/>
+                </svg>
+            </div>
+            <div class="tree-root root-right-bottom light animated">
+                <svg viewBox="0 0 450 400">
+                    <path d="M225 0 Q200 60 170 100 Q130 150 90 200 Q50 250 30 300 Q20 340 40 380" stroke-width="14"/>
+                    <path d="M225 0 Q250 50 240 100 Q230 160 200 220 Q170 280 160 340 Q155 370 180 400" stroke-width="11"/>
+                    <path d="M225 0 Q280 40 320 90 Q360 150 390 210 Q420 270 440 340 Q450 380 430 400" stroke-width="12"/>
+                    <path d="M170 100 Q130 120 100 150 Q70 180 40 200" stroke-width="6"/>
+                    <path d="M240 100 Q280 120 310 150 Q350 190 390 220" stroke-width="6"/>
+                    <path d="M90 200 Q60 230 40 260 Q20 290 10 330" stroke-width="5"/>
+                    <path d="M200 220 Q160 260 130 300 Q110 340 100 380" stroke-width="5"/>
+                    <path d="M390 210 Q410 250 430 290 Q445 330 450 370" stroke-width="5"/>
+                </svg>
+            </div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <div class="mb-6">
+                    <i class="fas fa-tree text-6xl md:text-8xl text-white/90 drop-shadow-lg"></i>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 drop-shadow-lg">Farm Pépinière</h1>
+                <p class="text-xl md:text-2xl mb-10 text-white/90 max-w-3xl mx-auto">Your premier destination for quality trees. From fruit trees to ornamental beauties, we grow them all with love and expertise.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#trees" class="inline-block bg-white text-green-700 hover:bg-green-50 px-8 py-4 rounded-full text-lg font-semibold transition transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-leaf mr-2"></i>Explore Our Trees
+                    </a>
+                    <a href="#contact" class="inline-block bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-full text-lg font-semibold transition transform hover:scale-105">
+                        <i class="fas fa-phone mr-2"></i>Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div class="p-6 floating-card bg-stone-50 rounded-2xl shadow-lg">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-seedling text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Premium Quality</h3>
+                    <p class="text-gray-600">All trees are grown with organic methods and expert care</p>
+                </div>
+                <div class="p-6 floating-card bg-stone-50 rounded-2xl shadow-lg">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-truck text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Safe Delivery</h3>
+                    <p class="text-gray-600">Careful packaging and delivery to your doorstep</p>
+                </div>
+                <div class="p-6 floating-card bg-stone-50 rounded-2xl shadow-lg">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-hand-holding-heart text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Expert Advice</h3>
+                    <p class="text-gray-600">Free planting and care guidance from our experts</p>
+                </div>
+                <div class="p-6 floating-card bg-stone-50 rounded-2xl shadow-lg">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-certificate text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Guaranteed Growth</h3>
+                    <p class="text-gray-600">1-year replacement guarantee on all trees</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trees Section -->
+    <section id="trees" class="py-20 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 relative overflow-hidden">
+        <!-- Tree Roots Background -->
+        <div class="roots-container">
+            <div class="tree-root root-left-bottom animated">
+                <svg viewBox="0 0 400 350">
+                    <path d="M200 0 Q180 50 160 80 Q120 120 80 150 Q40 180 10 220 Q-10 250 20 280 Q40 300 30 340" stroke-width="12"/>
+                    <path d="M200 0 Q220 60 200 100 Q180 140 150 180 Q120 220 100 270 Q90 300 110 340" stroke-width="10"/>
+                    <path d="M200 0 Q240 40 260 80 Q280 130 300 180 Q320 230 350 280 Q370 310 390 340" stroke-width="11"/>
+                    <path d="M160 80 Q140 100 110 110 Q70 120 40 140" stroke-width="6"/>
+                    <path d="M200 100 Q170 130 140 150 Q100 170 60 200" stroke-width="5"/>
+                    <path d="M260 80 Q290 100 320 110 Q350 130 380 150" stroke-width="6"/>
+                    <path d="M80 150 Q50 170 30 200 Q10 230 0 260" stroke-width="4"/>
+                </svg>
+            </div>
+            <div class="tree-root root-right-bottom animated">
+                <svg viewBox="0 0 450 400">
+                    <path d="M225 0 Q200 60 170 100 Q130 150 90 200 Q50 250 30 300 Q20 340 40 380" stroke-width="14"/>
+                    <path d="M225 0 Q250 50 240 100 Q230 160 200 220 Q170 280 160 340 Q155 370 180 400" stroke-width="11"/>
+                    <path d="M225 0 Q280 40 320 90 Q360 150 390 210 Q420 270 440 340 Q450 380 430 400" stroke-width="12"/>
+                    <path d="M170 100 Q130 120 100 150 Q70 180 40 200" stroke-width="6"/>
+                    <path d="M240 100 Q280 120 310 150 Q350 190 390 220" stroke-width="6"/>
+                </svg>
+            </div>
+            <div class="tree-root root-center-bottom animated">
+                <svg viewBox="0 0 500 300">
+                    <path d="M250 0 Q230 40 200 70 Q160 110 120 150 Q80 190 50 240 Q30 270 40 300" stroke-width="10"/>
+                    <path d="M250 0 Q270 50 250 90 Q230 140 220 190 Q210 240 230 290" stroke-width="8"/>
+                    <path d="M250 0 Q290 30 330 70 Q380 120 420 170 Q450 220 470 270" stroke-width="10"/>
+                    <path d="M200 70 Q160 90 130 120" stroke-width="5"/>
+                    <path d="M330 70 Q370 90 400 120" stroke-width="5"/>
+                </svg>
+            </div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="decorated-title decorated-title-dark">
+                <div class="title-decoration left">
+                    <span class="line"></span>
+                    <i class="fas fa-leaf leaf"></i>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-center text-green-900 section-title">Our Tree Collection</h2>
+                <div class="title-decoration right">
+                    <i class="fas fa-leaf leaf"></i>
+                    <span class="line"></span>
+                </div>
+            </div>
+            <p class="text-center text-gray-600 mt-8 mb-12 max-w-2xl mx-auto">Discover our wide selection of healthy, beautiful trees ready to transform your garden</p>
+            
+            <!-- Category Filter -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button class="category-btn active px-6 py-2 rounded-full border-2 border-green-800 font-medium transition" data-category="all">All Trees</button>
+                <button class="category-btn px-6 py-2 rounded-full border-2 border-green-800 text-green-800 hover:bg-green-800 hover:text-white font-medium transition" data-category="fruit">Fruit Trees</button>
+                <button class="category-btn px-6 py-2 rounded-full border-2 border-green-800 text-green-800 hover:bg-green-800 hover:text-white font-medium transition" data-category="ornamental">Ornamental</button>
+                <button class="category-btn px-6 py-2 rounded-full border-2 border-green-800 text-green-800 hover:bg-green-800 hover:text-white font-medium transition" data-category="evergreen">Evergreen</button>
+                <button class="category-btn px-6 py-2 rounded-full border-2 border-green-800 text-green-800 hover:bg-green-800 hover:text-white font-medium transition" data-category="shade">Shade Trees</button>
+            </div>
+
+            <!-- Trees Grid -->
+            <div id="treesGrid" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Trees will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-green-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="decorated-title decorated-title-light justify-start">
+                        <h2 class="text-4xl md:text-5xl font-bold section-title section-title-left">Growing Dreams Since 1985</h2>
+                        <div class="title-decoration right">
+                            <i class="fas fa-leaf leaf"></i>
+                            <span class="line"></span>
+                        </div>
+                    </div>
+                    <p class="text-lg text-green-100 mb-6">For over 35 years, Farm Pépinière has been the trusted source for quality trees in the region. What started as a small family nursery has grown into one of the largest tree farms, offering over 200 varieties of trees.</p>
+                    <p class="text-lg text-green-100 mb-8">Our passionate team of horticulturists ensures every tree is healthy, strong, and ready to thrive in your garden. We believe in sustainable practices and work to preserve our environment while helping you create your perfect outdoor space.</p>
+                    <div class="grid grid-cols-3 gap-6 text-center">
+                        <div>
+                            <div class="text-4xl font-bold text-amber-400">35+</div>
+                            <div class="text-green-200">Years Experience</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-bold text-amber-400">200+</div>
+                            <div class="text-green-200">Tree Varieties</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-bold text-amber-400">50K+</div>
+                            <div class="text-green-200">Happy Customers</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=400" alt="Nursery" class="rounded-lg shadow-xl border-4 border-white/80">
+                    <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400" alt="Trees" class="rounded-lg shadow-xl mt-8 border-4 border-white/80">
+                    <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=400" alt="Gardening" class="rounded-lg shadow-xl border-4 border-white/80">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" alt="Plants" class="rounded-lg shadow-xl mt-8 border-4 border-white/80">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Media Gallery Section -->
+    <section id="media" class="py-20 bg-gradient-to-br from-stone-100 via-green-50 to-stone-100 relative overflow-hidden">
+        <!-- Tree Roots Background -->
+        <div class="roots-container">
+            <div class="tree-root root-left-bottom animated">
+                <svg viewBox="0 0 400 350">
+                    <path d="M200 0 Q180 50 160 80 Q120 120 80 150 Q40 180 10 220 Q-10 250 20 280 Q40 300 30 340" stroke-width="12"/>
+                    <path d="M200 0 Q220 60 200 100 Q180 140 150 180 Q120 220 100 270 Q90 300 110 340" stroke-width="10"/>
+                    <path d="M160 80 Q140 100 110 110 Q70 120 40 140" stroke-width="6"/>
+                </svg>
+            </div>
+            <div class="tree-root root-right-top animated">
+                <svg viewBox="0 0 380 320">
+                    <path d="M190 320 Q170 260 150 220 Q120 170 90 130 Q60 90 40 50 Q30 20 50 0" stroke-width="11"/>
+                    <path d="M190 320 Q210 270 200 220 Q185 170 160 120 Q140 70 150 20" stroke-width="9"/>
+                    <path d="M150 220 Q110 200 80 170" stroke-width="5"/>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="decorated-title decorated-title-dark">
+                <div class="title-decoration left">
+                    <span class="line"></span>
+                    <i class="fas fa-leaf leaf"></i>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-center text-green-900 section-title">Our Gallery</h2>
+                <div class="title-decoration right">
+                    <i class="fas fa-leaf leaf"></i>
+                    <span class="line"></span>
+                </div>
+            </div>
+            <p class="text-center text-gray-600 mt-8 mb-12 max-w-2xl mx-auto">Take a visual journey through our beautiful nursery and see our trees in action</p>
+            
+            <!-- Media Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
+                <button class="media-tab active px-6 py-2 rounded-full border-2 border-green-800 font-medium transition" data-filter="all">All Media</button>
+                <button class="media-tab px-6 py-2 rounded-full border-2 border-green-800 text-green-800 hover:bg-green-800 hover:text-white font-medium transition" data-filter="photos">Photos</button>
+                <button class="media-tab px-6 py-2 rounded-full border-2 border-green-800 text-green-800 hover:bg-green-800 hover:text-white font-medium transition" data-filter="videos">Videos</button>
+            </div>
+            
+            <!-- Media Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="mediaGrid">
+                <!-- Photo Items -->
+                <div class="media-item photo-item col-span-2 row-span-2 relative group overflow-hidden rounded-2xl shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800" alt="Nursery Overview" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="absolute bottom-4 left-4 right-4 text-white transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-300">
+                        <h4 class="font-bold text-lg">Our Beautiful Nursery</h4>
+                        <p class="text-sm text-white/80">Acres of greenery awaiting you</p>
+                    </div>
+                    <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <i class="fas fa-expand text-white"></i>
+                    </div>
+                </div>
+                
+                <div class="media-item photo-item relative group overflow-hidden rounded-2xl shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=400" alt="Planting Trees" class="w-full h-48 object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="absolute bottom-3 left-3 right-3 text-white transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-300">
+                        <h4 class="font-bold text-sm">Expert Planting</h4>
+                    </div>
+                    <div class="absolute top-3 right-3 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <i class="fas fa-expand text-white text-sm"></i>
+                    </div>
+                </div>
+                
+                <div class="media-item video-item relative group overflow-hidden rounded-2xl shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=400" alt="Growing Process" class="w-full h-48 object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition duration-300 flex items-center justify-center">
+                        <div class="w-14 h-14 bg-white/90 rounded-full flex items-center justify-center transform group-hover:scale-110 transition duration-300 shadow-lg">
+                            <i class="fas fa-play text-green-600 text-xl ml-1"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-3 left-3 right-3 text-white">
+                        <h4 class="font-bold text-sm">Growing Process</h4>
+                        <p class="text-xs text-white/80"><i class="fas fa-clock mr-1"></i>2:45</p>
+                    </div>
+                </div>
+                
+                <div class="media-item photo-item relative group overflow-hidden rounded-2xl shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" alt="Young Plants" class="w-full h-48 object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="absolute bottom-3 left-3 right-3 text-white transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-300">
+                        <h4 class="font-bold text-sm">Young Plants</h4>
+                    </div>
+                    <div class="absolute top-3 right-3 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <i class="fas fa-expand text-white text-sm"></i>
+                    </div>
+                </div>
+                
+                <div class="media-item video-item relative group overflow-hidden rounded-2xl shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=400" alt="Tree Care Tips" class="w-full h-48 object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition duration-300 flex items-center justify-center">
+                        <div class="w-14 h-14 bg-white/90 rounded-full flex items-center justify-center transform group-hover:scale-110 transition duration-300 shadow-lg">
+                            <i class="fas fa-play text-green-600 text-xl ml-1"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-3 left-3 right-3 text-white">
+                        <h4 class="font-bold text-sm">Tree Care Tips</h4>
+                        <p class="text-xs text-white/80"><i class="fas fa-clock mr-1"></i>5:12</p>
+                    </div>
+                </div>
+                
+                <div class="media-item photo-item relative group overflow-hidden rounded-2xl shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1503785640985-f62e3aeee448?w=400" alt="Fruit Harvest" class="w-full h-48 object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="absolute bottom-3 left-3 right-3 text-white transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-300">
+                        <h4 class="font-bold text-sm">Fruit Harvest</h4>
+                    </div>
+                    <div class="absolute top-3 right-3 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <i class="fas fa-expand text-white text-sm"></i>
+                    </div>
+                </div>
+                
+                <div class="media-item photo-item col-span-2 relative group overflow-hidden rounded-2xl shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1444392061186-9fc38f16f203?w=800" alt="Seasonal Colors" class="w-full h-48 object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="absolute bottom-4 left-4 right-4 text-white transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-300">
+                        <h4 class="font-bold text-lg">Beautiful Autumn Colors</h4>
+                        <p class="text-sm text-white/80">Experience the magic of changing seasons</p>
+                    </div>
+                    <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <i class="fas fa-expand text-white"></i>
+                    </div>
+                </div>
+                
+                <div class="media-item video-item relative group overflow-hidden rounded-2xl shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=400" alt="Nursery Tour" class="w-full h-48 object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition duration-300 flex items-center justify-center">
+                        <div class="w-14 h-14 bg-white/90 rounded-full flex items-center justify-center transform group-hover:scale-110 transition duration-300 shadow-lg">
+                            <i class="fas fa-play text-green-600 text-xl ml-1"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-3 left-3 right-3 text-white">
+                        <h4 class="font-bold text-sm">Nursery Tour</h4>
+                        <p class="text-xs text-white/80"><i class="fas fa-clock mr-1"></i>8:30</p>
+                    </div>
+                </div>
+                
+                <div class="media-item photo-item relative group overflow-hidden rounded-2xl shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400" alt="Mountain View" class="w-full h-48 object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="absolute bottom-3 left-3 right-3 text-white transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-300">
+                        <h4 class="font-bold text-sm">Scenic Views</h4>
+                    </div>
+                    <div class="absolute top-3 right-3 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <i class="fas fa-expand text-white text-sm"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- View More Button -->
+            <div class="text-center mt-10">
+                <button class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-full font-semibold transition transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-images"></i>
+                    View Full Gallery
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div id="lightboxModal" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center backdrop-blur-sm">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition">
+            <i class="fas fa-times text-2xl"></i>
+        </button>
+        <button onclick="prevMedia()" class="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition">
+            <i class="fas fa-chevron-left text-xl"></i>
+        </button>
+        <button onclick="nextMedia()" class="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition">
+            <i class="fas fa-chevron-right text-xl"></i>
+        </button>
+        <div class="max-w-5xl max-h-[85vh] mx-4">
+            <img id="lightboxImage" src="" alt="" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl">
+        </div>
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-center">
+            <h4 id="lightboxTitle" class="font-bold text-xl mb-1"></h4>
+            <p id="lightboxDesc" class="text-white/70"></p>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white relative overflow-hidden">
+        <!-- Tree Roots Background -->
+        <div class="roots-container">
+            <div class="tree-root root-left-top animated">
+                <svg viewBox="0 0 350 300">
+                    <path d="M175 300 Q160 250 140 210 Q110 160 80 120 Q50 80 30 40 Q20 10 40 0" stroke-width="11"/>
+                    <path d="M175 300 Q190 240 180 190 Q165 140 140 90 Q120 50 130 10" stroke-width="9"/>
+                    <path d="M175 300 Q210 250 240 200 Q270 150 300 100 Q320 60 340 20" stroke-width="10"/>
+                    <path d="M140 210 Q100 190 70 160" stroke-width="5"/>
+                    <path d="M240 200 Q280 180 310 150" stroke-width="5"/>
+                </svg>
+            </div>
+            <div class="tree-root root-right-bottom animated">
+                <svg viewBox="0 0 400 350">
+                    <path d="M200 0 Q180 50 160 80 Q120 120 80 150 Q40 180 10 220 Q-10 250 20 280 Q40 300 30 340" stroke-width="12"/>
+                    <path d="M200 0 Q220 60 200 100 Q180 140 150 180 Q120 220 100 270 Q90 300 110 340" stroke-width="10"/>
+                    <path d="M200 0 Q240 40 260 80 Q280 130 300 180 Q320 230 350 280 Q370 310 390 340" stroke-width="11"/>
+                    <path d="M160 80 Q140 100 110 110 Q70 120 40 140" stroke-width="6"/>
+                    <path d="M260 80 Q290 100 320 110 Q350 130 380 150" stroke-width="6"/>
+                </svg>
+            </div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="decorated-title decorated-title-dark">
+                <div class="title-decoration left">
+                    <span class="line"></span>
+                    <i class="fas fa-leaf leaf"></i>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-center text-green-900 section-title">Send Us a Message</h2>
+                <div class="title-decoration right">
+                    <i class="fas fa-leaf leaf"></i>
+                    <span class="line"></span>
+                </div>
+            </div>
+            <p class="text-center text-gray-600 mt-8 mb-12 max-w-2xl mx-auto">Have questions about our trees? Want to place a bulk order? We'd love to hear from you!</p>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gradient-to-br from-green-50 to-stone-100 p-10 md:p-14 rounded-3xl shadow-2xl">
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Your Name *</label>
+                                <input type="text" placeholder="John Doe" class="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-lg" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Your Email *</label>
+                                <input type="email" placeholder="john@example.com" class="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-lg" required>
+                            </div>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Phone Number</label>
+                                <input type="tel" placeholder="(555) 123-4567" class="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-lg">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Subject</label>
+                                <select class="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-lg bg-white">
+                                    <option value="">Select a topic</option>
+                                    <option value="order">Place an Order</option>
+                                    <option value="inquiry">General Inquiry</option>
+                                    <option value="bulk">Bulk Purchase</option>
+                                    <option value="advice">Tree Care Advice</option>
+                                    <option value="visit">Schedule a Visit</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Your Message *</label>
+                            <textarea placeholder="Tell us about your project or ask us anything..." rows="6" class="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-lg resize-none" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-5 rounded-xl font-bold text-xl transition transform hover:scale-[1.02] shadow-lg">
+                            <i class="fas fa-paper-plane mr-3"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-green-950 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <!-- Footer Top -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <i class="fas fa-tree text-3xl text-green-400"></i>
+                        <span class="text-2xl font-bold font-['Playfair_Display']">Farm Pépinière</span>
+                    </div>
+                    <p class="text-green-200 mb-6">Your premier destination for quality trees. From fruit trees to ornamental beauties, we grow them all with love and expertise.</p>
+                    <!-- Social Icons -->
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 bg-green-800 hover:bg-green-600 rounded-full flex items-center justify-center text-white transition transform hover:scale-110">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-green-800 hover:bg-pink-600 rounded-full flex items-center justify-center text-white transition transform hover:scale-110">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-green-800 hover:bg-blue-500 rounded-full flex items-center justify-center text-white transition transform hover:scale-110">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-green-800 hover:bg-red-600 rounded-full flex items-center justify-center text-white transition transform hover:scale-110">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Our Location -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-map-marker-alt text-green-400"></i>
+                        Our Location
+                    </h4>
+                    <p class="text-green-200 leading-relaxed">
+                        123 Green Valley Road<br>
+                        Countryside, CA 90210<br>
+                        United States
+                    </p>
+                    <a href="#" class="inline-block mt-3 text-amber-400 hover:text-amber-300 transition">
+                        <i class="fas fa-directions mr-1"></i> Get Directions
+                    </a>
+                </div>
+                
+                <!-- Opening Hours -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-clock text-green-400"></i>
+                        Opening Hours
+                    </h4>
+                    <ul class="text-green-200 space-y-2">
+                        <li class="flex justify-between">
+                            <span>Monday - Friday</span>
+                            <span>8:00 AM - 6:00 PM</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Saturday</span>
+                            <span>8:00 AM - 6:00 PM</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Sunday</span>
+                            <span>9:00 AM - 4:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-phone-alt text-green-400"></i>
+                        Contact Us
+                    </h4>
+                    <ul class="text-green-200 space-y-3">
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone text-green-400"></i>
+                            <a href="tel:+15551234567" class="hover:text-white transition">(555) 123-4567</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-green-400"></i>
+                            <a href="mailto:info@farmpepiniere.com" class="hover:text-white transition">info@farmpepiniere.com</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fab fa-whatsapp text-green-400"></i>
+                            <a href="#" class="hover:text-white transition">WhatsApp Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Footer Divider -->
+            <div class="border-t border-green-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-green-300 text-center md:text-left">© 2024 Farm Pépinière. All rights reserved. Growing nature's beauty.</p>
+                    <div class="flex gap-6 text-green-300 text-sm">
+                        <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                        <a href="#" class="hover:text-white transition">Terms of Service</a>
+                        <a href="#" class="hover:text-white transition">Sitemap</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Details Modal -->
+    <div id="productModal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-3xl w-full mx-4 max-h-[90vh] overflow-hidden shadow-2xl transform transition-all">
+            <div class="relative">
+                <img id="productImage" src="" alt="" class="w-full h-72 object-cover">
+                <button onclick="closeProductModal()" class="absolute top-4 right-4 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center text-gray-700 hover:text-red-500 transition shadow-lg">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+                <span id="productCategory" class="absolute top-4 left-4 bg-green-600 text-white px-4 py-1.5 rounded-full text-sm font-medium capitalize shadow-lg"></span>
+            </div>
+            <div class="p-8">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 id="productName" class="text-3xl font-bold text-green-900"></h3>
+                    <span id="productPrice" class="text-3xl font-bold text-green-600"></span>
+                </div>
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="flex items-center gap-1 text-amber-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="text-gray-500">(4.5 / 5 - 128 reviews)</span>
+                </div>
+                <p id="productDescription" class="text-gray-600 text-lg mb-6"></p>
+                
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div class="bg-green-50 p-4 rounded-xl text-center">
+                        <i class="fas fa-ruler-vertical text-2xl text-green-600 mb-2"></i>
+                        <p class="text-sm text-gray-600">Height</p>
+                        <p class="font-bold text-green-900">4-6 ft</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-xl text-center">
+                        <i class="fas fa-sun text-2xl text-green-600 mb-2"></i>
+                        <p class="text-sm text-gray-600">Sunlight</p>
+                        <p class="font-bold text-green-900">Full Sun</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-xl text-center">
+                        <i class="fas fa-tint text-2xl text-green-600 mb-2"></i>
+                        <p class="text-sm text-gray-600">Watering</p>
+                        <p class="font-bold text-green-900">Moderate</p>
+                    </div>
+                </div>
+                
+                <div class="flex gap-4">
+                    <button id="productAddToCart" onclick="" class="flex-1 bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold text-lg transition transform hover:scale-[1.02]">
+                        <i class="fas fa-cart-plus mr-2"></i> Add to Cart
+                    </button>
+                    <button class="px-6 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl transition">
+                        <i class="fas fa-heart text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/50" onclick="closeCart()"></div>
+        <div class="cart-panel absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl transform translate-x-full transition-transform duration-500 ease-out">
+            <!-- Cart Header -->
+            <div class="bg-gradient-to-r from-green-600 to-green-700 text-white p-6">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">Your Cart</h3>
+                            <p class="text-green-100 text-sm"><span id="cartItemCount">0</span> items</p>
+                        </div>
+                    </div>
+                    <button onclick="closeCart()" class="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Cart Content -->
+            <div class="flex flex-col h-[calc(100%-200px)]">
+                <div id="cartItems" class="flex-1 overflow-y-auto p-6 space-y-4">
+                    <!-- Cart items will be inserted here -->
+                </div>
+                
+                <div id="cartEmpty" class="flex-1 flex flex-col items-center justify-center text-gray-400 p-6">
+                    <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-shopping-basket text-4xl"></i>
+                    </div>
+                    <p class="text-xl font-medium text-gray-500">Your cart is empty</p>
+                    <p class="text-gray-400 mt-2">Add some beautiful trees!</p>
+                    <button onclick="closeCart()" class="mt-6 px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-full font-medium transition">
+                        Continue Shopping
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Cart Footer -->
+            <div id="cartFooter" class="absolute bottom-0 left-0 right-0 bg-white border-t shadow-lg p-6 hidden">
+                <div class="space-y-3 mb-4">
+                    <div class="flex justify-between text-gray-600">
+                        <span>Subtotal</span>
+                        <span id="subtotalAmount">$0</span>
+                    </div>
+                    <div class="flex justify-between text-gray-600">
+                        <span>Delivery</span>
+                        <span class="text-green-600">Free</span>
+                    </div>
+                    <div class="flex justify-between text-xl font-bold text-gray-800 pt-3 border-t">
+                        <span>Total</span>
+                        <span id="totalAmount" class="text-green-600">$0</span>
+                    </div>
+                </div>
+                <button onclick="openCheckout()" class="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 rounded-xl font-bold text-lg transition transform hover:scale-[1.02] shadow-lg">
+                    <i class="fas fa-lock mr-2"></i>Proceed to Checkout
+                </button>
+                <p class="text-center text-gray-400 text-sm mt-3">
+                    <i class="fas fa-shield-alt mr-1"></i>Secure checkout guaranteed
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="fixed inset-0 z-[60] hidden items-center justify-center">
+        <div class="absolute inset-0 bg-black/60" onclick="closeCheckout()"></div>
+        <div class="checkout-content relative bg-white rounded-3xl max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
+            <!-- Checkout Header -->
+            <div class="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 rounded-t-3xl">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-clipboard-list text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Checkout</h3>
+                        <p class="text-green-100">Complete your order</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="p-6 bg-green-50 border-b">
+                <h4 class="font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <i class="fas fa-shopping-bag text-green-600"></i>Order Summary
+                </h4>
+                <div id="checkoutItems" class="space-y-2 max-h-32 overflow-y-auto">
+                    <!-- Items will be inserted here -->
+                </div>
+                <div class="flex justify-between font-bold text-lg mt-4 pt-3 border-t border-green-200">
+                    <span>Total</span>
+                    <span id="checkoutTotal" class="text-green-600">$0</span>
+                </div>
+            </div>
+            
+            <!-- Checkout Form -->
+            <form id="checkoutForm" class="p-6 space-y-5">
+                <h4 class="font-bold text-gray-800 flex items-center gap-2">
+                    <i class="fas fa-user text-green-600"></i>Your Information
+                </h4>
+                
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">Full Name *</label>
+                    <div class="relative">
+                        <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="customerName" placeholder="John Doe" class="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition" required>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">Phone Number *</label>
+                    <div class="relative">
+                        <i class="fas fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="tel" id="customerPhone" placeholder="(555) 123-4567" class="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition" required>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">Email Address *</label>
+                    <div class="relative">
+                        <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="email" id="customerEmail" placeholder="john@example.com" class="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition" required>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">Delivery Address *</label>
+                    <div class="relative">
+                        <i class="fas fa-map-marker-alt absolute left-4 top-4 text-gray-400"></i>
+                        <textarea id="customerAddress" placeholder="Enter your full delivery address..." rows="3" class="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition resize-none" required></textarea>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">Delivery Notes (Optional)</label>
+                    <div class="relative">
+                        <i class="fas fa-sticky-note absolute left-4 top-4 text-gray-400"></i>
+                        <textarea id="deliveryNotes" placeholder="Any special instructions..." rows="2" class="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition resize-none"></textarea>
+                    </div>
+                </div>
+                
+                <div class="flex gap-3 pt-4">
+                    <button type="button" onclick="closeCheckout()" class="flex-1 px-6 py-4 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-semibold transition">
+                        <i class="fas fa-arrow-left mr-2"></i>Back
+                    </button>
+                    <button type="submit" class="flex-1 px-6 py-4 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-xl font-semibold transition transform hover:scale-[1.02] shadow-lg">
+                        <i class="fas fa-check mr-2"></i>Place Order
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Order Success Modal -->
+    <div id="successModal" class="fixed inset-0 z-[70] hidden items-center justify-center">
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="success-content relative bg-white rounded-3xl max-w-md w-full mx-4 p-8 text-center shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
+            <!-- Success Animation -->
+            <div class="relative mb-6">
+                <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto animate-bounce">
+                    <i class="fas fa-check text-5xl text-green-600"></i>
+                </div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-32 h-32 border-4 border-green-200 rounded-full animate-ping opacity-50"></div>
+                </div>
+            </div>
+            
+            <h3 class="text-3xl font-bold text-gray-800 mb-2">Order Placed!</h3>
+            <p class="text-gray-600 mb-6">Thank you for your order. We've created an account for you!</p>
+            
+            <!-- Account Details -->
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-5 mb-6 text-left border border-green-200">
+                <h4 class="font-bold text-green-800 mb-3 flex items-center gap-2">
+                    <i class="fas fa-user-circle"></i>Your Account Details
+                </h4>
+                <div class="space-y-2">
+                    <p class="flex items-center gap-3 text-gray-700">
+                        <i class="fas fa-user text-green-600 w-5"></i>
+                        <span id="successName">John Doe</span>
+                    </p>
+                    <p class="flex items-center gap-3 text-gray-700">
+                        <i class="fas fa-envelope text-green-600 w-5"></i>
+                        <span id="successEmail">john@example.com</span>
+                    </p>
+                    <p class="flex items-center gap-3 text-gray-700">
+                        <i class="fas fa-key text-green-600 w-5"></i>
+                        <span>Password: <code id="successPassword" class="bg-green-100 px-2 py-1 rounded text-green-800 font-mono">********</code></span>
+                    </p>
+                </div>
+                <p class="text-sm text-green-600 mt-3 flex items-center gap-1">
+                    <i class="fas fa-info-circle"></i>
+                    Check your email for login details
+                </p>
+            </div>
+            
+            <!-- Order Info -->
+            <div class="bg-gray-50 rounded-2xl p-5 mb-6 text-left">
+                <h4 class="font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <i class="fas fa-receipt text-green-600"></i>Order Information
+                </h4>
+                <div class="space-y-2 text-gray-600">
+                    <p class="flex justify-between">
+                        <span>Order ID:</span>
+                        <span id="successOrderId" class="font-mono font-bold">#ORD-2024-001</span>
+                    </p>
+                    <p class="flex justify-between">
+                        <span>Estimated Delivery:</span>
+                        <span class="font-semibold">3-5 Business Days</span>
+                    </p>
+                </div>
+            </div>
+            
+            <button onclick="closeSuccess()" class="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 rounded-xl font-bold text-lg transition transform hover:scale-[1.02] shadow-lg">
+                <i class="fas fa-home mr-2"></i>Continue Shopping
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Tree data
+        const trees = [
+            { id: 1, name: "Apple Tree", category: "fruit", price: 45, image: "https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?w=400", description: "Delicious red apples, self-pollinating" },
+            { id: 2, name: "Cherry Blossom", category: "ornamental", price: 85, image: "https://images.unsplash.com/photo-1522383225653-ed111181a951?w=400", description: "Beautiful pink spring blooms" },
+            { id: 3, name: "Blue Spruce", category: "evergreen", price: 120, image: "https://images.unsplash.com/photo-1545147986-a9d6f2ab03b5?w=400", description: "Stunning blue-silver needles year-round" },
+            { id: 4, name: "Red Maple", category: "shade", price: 95, image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400", description: "Brilliant red fall foliage" },
+            { id: 5, name: "Lemon Tree", category: "fruit", price: 55, image: "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=400", description: "Fresh lemons all year, fragrant blooms" },
+            { id: 6, name: "Japanese Maple", category: "ornamental", price: 150, image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400", description: "Elegant lacey leaves, compact size" },
+            { id: 7, name: "White Pine", category: "evergreen", price: 75, image: "https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?w=400", description: "Soft needles, fast growing" },
+            { id: 8, name: "Oak Tree", category: "shade", price: 110, image: "https://images.unsplash.com/photo-1594249183966-fc9c06d0e1af?w=400", description: "Majestic shade tree, long-lived" },
+            { id: 9, name: "Peach Tree", category: "fruit", price: 50, image: "https://images.unsplash.com/photo-1595743825637-cdafc8cd1920?w=400", description: "Sweet juicy peaches, pink flowers" },
+            { id: 10, name: "Magnolia", category: "ornamental", price: 130, image: "https://images.unsplash.com/photo-1518882605630-8996a190e6c6?w=400", description: "Large fragrant white blooms" },
+            { id: 11, name: "Cypress", category: "evergreen", price: 90, image: "https://images.unsplash.com/photo-1605092676920-8ac5ae40c7c8?w=400", description: "Tall columnar shape, drought tolerant" },
+            { id: 12, name: "Willow Tree", category: "shade", price: 80, image: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=400", description: "Graceful weeping branches" }
+        ];
+
+        let cart = [];
+
+        // Render trees
+        function renderTrees(category = 'all') {
+            const grid = document.getElementById('treesGrid');
+            const filteredTrees = category === 'all' ? trees : trees.filter(t => t.category === category);
+            
+            grid.innerHTML = filteredTrees.map(tree => `
+                <div class="tree-card bg-white shadow-lg overflow-hidden transition duration-300 border-2 border-green-200 hover:border-green-400 flex flex-col" data-category="${tree.category}">
+                    <div class="relative tree-card-image overflow-hidden flex-shrink-0">
+                        <img src="${tree.image}" alt="${tree.name}" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                        <span class="absolute top-4 left-4 bg-green-600 text-white px-4 py-1.5 rounded-full text-sm font-medium capitalize shadow-lg">${tree.category}</span>
+                        <div class="tree-card-overlay"></div>
+                        <div class="tree-card-actions">
+                            <button onclick="viewDetails(${tree.id})" class="tree-action-btn view-btn" title="View Details">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button onclick="addToCart(${tree.id})" class="tree-action-btn cart-btn-card" title="Add to Cart">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6 pb-0 bg-gradient-to-b from-white to-green-50 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-green-900 mb-2">${tree.name}</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2 flex-grow">${tree.description}</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-2xl font-bold text-green-600">$${tree.price}</span>
+                            <div class="flex items-center gap-1 text-amber-500">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="addToCart(${tree.id})" class="buy-now-btn w-full py-4 text-white font-bold text-lg relative z-10">
+                        <span class="btn-shine"></span>
+                        <i class="fas fa-shopping-bag mr-2"></i>Buy Now
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Category filter
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderTrees(btn.dataset.category);
+            });
+        });
+
+        // Add to cart
+        function addToCart(id) {
+            const tree = trees.find(t => t.id === id);
+            const existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...tree, quantity: 1 });
+            }
+            
+            updateCartUI();
+            
+            // Open cart sidebar
+            openCart();
+            
+            // Show notification
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-4 rounded-full shadow-2xl z-[100] flex items-center gap-3';
+            notification.innerHTML = `
+                <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                    <i class="fas fa-check text-lg"></i>
+                </div>
+                <div>
+                    <p class="font-bold">${tree.name}</p>
+                    <p class="text-green-100 text-sm">Added to your cart</p>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            // Animate notification
+            notification.style.transform = 'translateX(-50%) translateY(20px)';
+            notification.style.opacity = '0';
+            notification.style.transition = 'all 0.3s ease-out';
+            setTimeout(() => {
+                notification.style.transform = 'translateX(-50%) translateY(0)';
+                notification.style.opacity = '1';
+            }, 10);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(-50%) translateY(-20px)';
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 300);
+            }, 2500);
+        }
+
+        // Update cart UI
+        function updateCartUI() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+            document.getElementById('floatingCartCount').textContent = count;
+            document.getElementById('cartItemCount').textContent = count;
+            
+            const cartItems = document.getElementById('cartItems');
+            const cartEmpty = document.getElementById('cartEmpty');
+            const cartFooter = document.getElementById('cartFooter');
+            
+            if (cart.length === 0) {
+                cartEmpty.classList.remove('hidden');
+                cartFooter.classList.add('hidden');
+                cartItems.innerHTML = '';
+            } else {
+                cartEmpty.classList.add('hidden');
+                cartFooter.classList.remove('hidden');
+                
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item flex items-center gap-4 p-4 bg-gradient-to-r from-stone-50 to-green-50 rounded-xl border border-green-100 shadow-sm">
+                        <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded-xl shadow">
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800">${item.name}</h4>
+                            <p class="text-sm text-gray-500 capitalize">${item.category}</p>
+                            <p class="text-green-600 font-bold text-lg mt-1">$${item.price * item.quantity}</p>
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                            <div class="flex items-center gap-2 bg-white rounded-full px-2 py-1 shadow-sm border">
+                                <button onclick="decreaseQty(${item.id})" class="qty-btn bg-gray-100 hover:bg-red-100 text-gray-600 hover:text-red-600">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <span class="w-8 text-center font-bold">${item.quantity}</span>
+                                <button onclick="increaseQty(${item.id})" class="qty-btn bg-gray-100 hover:bg-green-100 text-gray-600 hover:text-green-600">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
+                            <button onclick="removeFromCart(${item.id})" class="cart-item-remove text-red-400 hover:text-red-600 text-sm">
+                                <i class="fas fa-trash mr-1"></i>Remove
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+                
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                document.getElementById('subtotalAmount').textContent = `$${total}`;
+                document.getElementById('totalAmount').textContent = `$${total}`;
+            }
+        }
+        
+        // Increase quantity
+        function increaseQty(id) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity++;
+                updateCartUI();
+            }
+        }
+        
+        // Decrease quantity
+        function decreaseQty(id) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                if (item.quantity > 1) {
+                    item.quantity--;
+                } else {
+                    cart = cart.filter(i => i.id !== id);
+                }
+                updateCartUI();
+            }
+        }
+
+        // Remove from cart
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartUI();
+        }
+        
+        // View product details
+        function viewDetails(id) {
+            const tree = trees.find(t => t.id === id);
+            if (!tree) return;
+            
+            document.getElementById('productImage').src = tree.image;
+            document.getElementById('productImage').alt = tree.name;
+            document.getElementById('productName').textContent = tree.name;
+            document.getElementById('productCategory').textContent = tree.category;
+            document.getElementById('productPrice').textContent = `$${tree.price}`;
+            document.getElementById('productDescription').textContent = tree.description + ' This beautiful tree is perfect for your garden and will thrive in various conditions. It comes with our 1-year growth guarantee and expert planting advice.';
+            document.getElementById('productAddToCart').onclick = () => {
+                addToCart(id);
+                closeProductModal();
+            };
+            
+            document.getElementById('productModal').classList.remove('hidden');
+            document.getElementById('productModal').classList.add('flex');
+        }
+        
+        // Close product modal
+        function closeProductModal() {
+            document.getElementById('productModal').classList.add('hidden');
+            document.getElementById('productModal').classList.remove('flex');
+        }
+        
+        // Close product modal on outside click
+        document.getElementById('productModal').addEventListener('click', (e) => {
+            if (e.target.id === 'productModal') closeProductModal();
+        });
+
+        // Cart sidebar
+        document.getElementById('cartBtn').addEventListener('click', () => {
+            openCart();
+        });
+        
+        function openCart() {
+            const sidebar = document.getElementById('cartSidebar');
+            const panel = sidebar.querySelector('.cart-panel');
+            sidebar.classList.remove('hidden');
+            setTimeout(() => {
+                panel.classList.add('open');
+            }, 10);
+        }
+
+        function closeCart() {
+            const sidebar = document.getElementById('cartSidebar');
+            const panel = sidebar.querySelector('.cart-panel');
+            panel.classList.remove('open');
+            setTimeout(() => {
+                sidebar.classList.add('hidden');
+            }, 500);
+        }
+        
+        // Checkout Modal
+        function openCheckout() {
+            closeCart();
+            setTimeout(() => {
+                const modal = document.getElementById('checkoutModal');
+                const content = modal.querySelector('.checkout-content');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                
+                // Populate checkout items
+                const checkoutItems = document.getElementById('checkoutItems');
+                checkoutItems.innerHTML = cart.map(item => `
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-gray-600">${item.name} × ${item.quantity}</span>
+                        <span class="font-semibold">$${item.price * item.quantity}</span>
+                    </div>
+                `).join('');
+                
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                document.getElementById('checkoutTotal').textContent = `$${total}`;
+                
+                setTimeout(() => {
+                    content.classList.add('show');
+                }, 10);
+            }, 300);
+        }
+        
+        function closeCheckout() {
+            const modal = document.getElementById('checkoutModal');
+            const content = modal.querySelector('.checkout-content');
+            content.classList.remove('show');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+        
+        // Generate random password
+        function generatePassword() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+            let password = '';
+            for (let i = 0; i < 8; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return password;
+        }
+        
+        // Generate order ID
+        function generateOrderId() {
+            const year = new Date().getFullYear();
+            const num = Math.floor(Math.random() * 9000) + 1000;
+            return `#ORD-${year}-${num}`;
+        }
+        
+        // Handle checkout form submission
+        document.getElementById('checkoutForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('customerName').value;
+            const email = document.getElementById('customerEmail').value;
+            const phone = document.getElementById('customerPhone').value;
+            const address = document.getElementById('customerAddress').value;
+            const notes = document.getElementById('deliveryNotes').value;
+            
+            // Generate account credentials
+            const password = generatePassword();
+            const orderId = generateOrderId();
+            
+            // Save customer data (in a real app, this would go to a server)
+            const customer = {
+                id: Date.now(),
+                name,
+                email,
+                phone,
+                address,
+                password,
+                orders: [{
+                    id: orderId,
+                    items: [...cart],
+                    total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                    status: 'pending',
+                    date: new Date().toISOString(),
+                    notes
+                }],
+                createdAt: new Date().toISOString()
+            };
+            
+            // Store in localStorage
+            const customers = JSON.parse(localStorage.getItem('farmPepiniereCustomers') || '[]');
+            customers.push(customer);
+            localStorage.setItem('farmPepiniereCustomers', JSON.stringify(customers));
+            
+            // Store orders
+            const orders = JSON.parse(localStorage.getItem('farmPepiniereOrders') || '[]');
+            orders.push({
+                ...customer.orders[0],
+                customerId: customer.id,
+                customerName: name,
+                customerEmail: email,
+                customerPhone: phone,
+                customerAddress: address
+            });
+            localStorage.setItem('farmPepiniereOrders', JSON.stringify(orders));
+            
+            // Close checkout and show success
+            closeCheckout();
+            
+            setTimeout(() => {
+                showSuccess(name, email, password, orderId);
+            }, 300);
+        });
+        
+        // Show success modal
+        function showSuccess(name, email, password, orderId) {
+            const modal = document.getElementById('successModal');
+            const content = modal.querySelector('.success-content');
+            
+            document.getElementById('successName').textContent = name;
+            document.getElementById('successEmail').textContent = email;
+            document.getElementById('successPassword').textContent = password;
+            document.getElementById('successOrderId').textContent = orderId;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            setTimeout(() => {
+                content.classList.add('show');
+            }, 10);
+        }
+        
+        function closeSuccess() {
+            const modal = document.getElementById('successModal');
+            const content = modal.querySelector('.success-content');
+            content.classList.remove('show');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                
+                // Clear cart
+                cart = [];
+                updateCartUI();
+                
+                // Reset form
+                document.getElementById('checkoutForm').reset();
+            }, 300);
+        }
+
+        // Contact form
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            e.target.reset();
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Initialize
+        renderTrees();
+        
+        // Navbar scroll effect & floating cart
+        const navbar = document.getElementById('navbar');
+        const floatingCart = document.getElementById('floatingCart');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+                floatingCart.classList.add('visible');
+            } else {
+                navbar.classList.remove('scrolled');
+                floatingCart.classList.remove('visible');
+            }
+        });
+        
+        // Active nav link on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Mobile menu toggle
+        function toggleMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuIcon = document.getElementById('menuIcon');
+            mobileMenu.classList.toggle('open');
+            
+            if (mobileMenu.classList.contains('open')) {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+            } else {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        }
+        
+        function closeMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuIcon = document.getElementById('menuIcon');
+            mobileMenu.classList.remove('open');
+            menuIcon.classList.remove('fa-times');
+            menuIcon.classList.add('fa-bars');
+        }
+        
+        // Nav glow effect following mouse
+        const navGlow = document.getElementById('navGlow');
+        navbar.addEventListener('mousemove', (e) => {
+            const rect = navbar.getBoundingClientRect();
+            navGlow.style.left = (e.clientX - rect.left - 75) + 'px';
+            navGlow.style.top = (e.clientY - rect.top - 75) + 'px';
+            navGlow.style.opacity = '1';
+        });
+        
+        navbar.addEventListener('mouseleave', () => {
+            navGlow.style.opacity = '0';
+        });
+        
+        // Media Gallery Filter
+        document.querySelectorAll('.media-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const filter = tab.dataset.filter;
+                document.querySelectorAll('.media-item').forEach(item => {
+                    if (filter === 'all') {
+                        item.style.display = 'block';
+                    } else if (filter === 'photos' && item.classList.contains('photo-item')) {
+                        item.style.display = 'block';
+                    } else if (filter === 'videos' && item.classList.contains('video-item')) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Lightbox functionality
+        let currentMediaIndex = 0;
+        let mediaItems = [];
+        
+        function openLightbox(element) {
+            const img = element.querySelector('img');
+            const title = element.querySelector('h4')?.textContent || '';
+            const desc = element.querySelector('p')?.textContent || '';
+            
+            document.getElementById('lightboxImage').src = img.src.replace('w=400', 'w=1200').replace('w=800', 'w=1200');
+            document.getElementById('lightboxTitle').textContent = title;
+            document.getElementById('lightboxDesc').textContent = desc;
+            
+            document.getElementById('lightboxModal').classList.remove('hidden');
+            document.getElementById('lightboxModal').classList.add('flex');
+            
+            // Get all visible media items for navigation
+            mediaItems = Array.from(document.querySelectorAll('.media-item:not([style*="display: none"])')); 
+            currentMediaIndex = mediaItems.indexOf(element);
+        }
+        
+        function closeLightbox() {
+            document.getElementById('lightboxModal').classList.add('hidden');
+            document.getElementById('lightboxModal').classList.remove('flex');
+        }
+        
+        function nextMedia() {
+            currentMediaIndex = (currentMediaIndex + 1) % mediaItems.length;
+            updateLightbox();
+        }
+        
+        function prevMedia() {
+            currentMediaIndex = (currentMediaIndex - 1 + mediaItems.length) % mediaItems.length;
+            updateLightbox();
+        }
+        
+        function updateLightbox() {
+            const element = mediaItems[currentMediaIndex];
+            const img = element.querySelector('img');
+            const title = element.querySelector('h4')?.textContent || '';
+            const desc = element.querySelector('p')?.textContent || '';
+            
+            document.getElementById('lightboxImage').src = img.src.replace('w=400', 'w=1200').replace('w=800', 'w=1200');
+            document.getElementById('lightboxTitle').textContent = title;
+            document.getElementById('lightboxDesc').textContent = desc;
+        }
+        
+        // Close lightbox on outside click
+        document.getElementById('lightboxModal').addEventListener('click', (e) => {
+            if (e.target.id === 'lightboxModal') closeLightbox();
+        });
+        
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('lightboxModal').classList.contains('hidden')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowRight') nextMedia();
+                if (e.key === 'ArrowLeft') prevMedia();
+            }
+        });
+    </script>
+</body>
+</html>
